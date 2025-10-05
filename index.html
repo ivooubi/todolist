@@ -21,16 +21,9 @@
         .container { width: 100%; max-width: 400px; padding: 20px; }
         h1 {
             font-size: 32px; font-weight: 700; text-align: center; text-transform: uppercase; margin-bottom: 30px;
-            background: linear-gradient(45deg, #333, #888, #333); background-size: 200%;
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite;
+            color: #333;
         }
-        body.dark-mode h1 { 
-            background: linear-gradient(45deg, #fff, #ccc, #fff); background-size: 200%;
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-            color: #fff;
-        }
-        @keyframes shine { 0% { background-position: 0%; } 100% { background-position: 200%; } }
+        body.dark-mode h1 { color: #fff; }
         .add-task { display: flex; margin-bottom: 20px; opacity: 0; transform: translateY(20px); animation: slideIn 0.5s ease forwards; }
         #task-input {
             flex: 1; padding: 12px; border: none; border-radius: 12px; font-size: 16px; margin-right: 10px;
@@ -93,3 +86,122 @@
 
     <script>
         const body = document.body;
+        const modeToggle = document.getElementById('mode-toggle');
+        const taskInput = document.getElementById('task-input');
+        const addButton = document.getElementById('add-button');
+        const clearButton = document.getElementById('clear-button');
+        const taskList = document.getElementById('task-list');
+
+        // Limpiar localStorage al cargar si hay datos corruptos (opcional, pero para resetear)
+        // localStorage.removeItem('tasks'); // Descomenta esta línea si quieres resetear siempre
+
+        // Cargar modo oscuro desde localStorage
+        if (localStorage.getItem('darkMode') === 'true') {
+            body.classList.add('dark-mode');
+            modeToggle.innerHTML = '🌙';
+        }
+
+        // Toggle modo oscuro
+        modeToggle.addEventListener('click', () => {
+            modeToggle.classList.add('animate-toggle');
+            setTimeout(() => modeToggle.classList.remove('animate-toggle'), 300);
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                modeToggle.innerHTML = '🌙';
+                localStorage.setItem('darkMode', 'true');
+            } else {
+                modeToggle.innerHTML = '☀️';
+                localStorage.setItem('darkMode', 'false');
+            }
+        });
+
+        // Limpiar todas las tareas
+        clearButton.addEventListener('click', () => {
+            localStorage.removeItem('tasks');
+            taskList.innerHTML = '';
+        });
+
+        // Función para añadir tarea
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            if (!taskText) return;
+
+            const li = document.createElement('li');
+            li.classList.add('task-item');
+
+            const span = document.createElement('span');
+            span.textContent = taskText;
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = '×';
+            deleteButton.addEventListener('click', () => {
+                li.style.animation = 'slideOut 0.3s ease forwards';
+                setTimeout(() => {
+                    li.remove();
+                    saveTasks();
+                }, 300);
+            });
+
+            li.appendChild(span);
+            li.appendChild(deleteButton);
+            taskList.appendChild(li);
+            taskInput.value = '';
+            taskInput.focus();
+            saveTasks();
+        }
+
+        addButton.addEventListener('click', addTask);
+
+        // Añadir tarea con Enter
+        taskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addTask();
+        });
+
+        // Guardar tareas
+        function saveTasks() {
+            const tasks = [];
+            document.querySelectorAll('.task-item span').forEach(span => tasks.push(span.textContent));
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        // Cargar tareas
+        function loadTasks() {
+            const savedTasks = localStorage.getItem('tasks');
+            if (!savedTasks) return;
+            let tasks;
+            try {
+                tasks = JSON.parse(savedTasks) || [];
+            } catch (e) {
+                console.error('Error loading tasks:', e);
+                localStorage.removeItem('tasks');
+                return;
+            }
+            tasks.forEach(task => addTaskToList(task));
+        }
+
+        function addTaskToList(taskText) {
+            const li = document.createElement('li');
+            li.classList.add('task-item');
+
+            const span = document.createElement('span');
+            span.textContent = taskText;
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = '×';
+            deleteButton.addEventListener('click', () => {
+                li.style.animation = 'slideOut 0.3s ease forwards';
+                setTimeout(() => {
+                    li.remove();
+                    saveTasks();
+                }, 300);
+            });
+
+            li.appendChild(span);
+            li.appendChild(deleteButton);
+            taskList.appendChild(li);
+        }
+
+        loadTasks();
+    </script>
+</body>
+</html>
