@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,10 +23,14 @@
         h1 {
             font-size: 32px; font-weight: 700; text-align: center; text-transform: uppercase; margin-bottom: 30px;
             background: linear-gradient(45deg, #333, #888, #333); background-size: 200%;
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
             animation: shine 3s linear infinite;
         }
-        body.dark-mode h1 { background: linear-gradient(45deg, #fff, #ccc, #fff); background-size: 200%; }
+        body.dark-mode h1 { 
+            background: linear-gradient(45deg, #fff, #ccc, #fff); background-size: 200%;
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+            color: #fff;
+        }
         @keyframes shine { 0% { background-position: 0%; } 100% { background-position: 200%; } }
         .add-task { display: flex; margin-bottom: 20px; opacity: 0; transform: translateY(20px); animation: slideIn 0.5s ease forwards; }
         #task-input {
@@ -179,3 +184,4 @@
     </script>
 </body>
 </html>
+```
