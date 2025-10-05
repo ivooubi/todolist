@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -44,6 +43,15 @@
             font-size: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
+        .clear-button {
+            background-color: #ff3b30; color: white; border: none; border-radius: 12px;
+            padding: 10px 20px; cursor: pointer; font-size: 14px; margin-bottom: 20px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .clear-button:hover {
+            transform: scale(1.05); box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        body.dark-mode .clear-button { background-color: #ff5f56; }
         .task-list { list-style: none; }
         .task-item {
             background-color: #fff; padding: 15px; margin-bottom: 12px; border-radius: 12px;
@@ -63,10 +71,10 @@
         @keyframes slideOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(20px); } }
         @keyframes subtle-rotate { from { transform: rotate(0deg); } to { transform: rotate(180deg); } }
         .animate-toggle { animation: subtle-rotate 0.3s ease; }
-        #add-button, .task-item, .task-item button, #task-input, #mode-toggle {
+        #add-button, .task-item, .task-item button, #task-input, #mode-toggle, .clear-button {
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
-        #add-button:hover, .task-item:hover, .task-item button:hover, #task-input:hover, #mode-toggle:hover {
+        #add-button:hover, .task-item:hover, .task-item button:hover, #task-input:hover, #mode-toggle:hover, .clear-button:hover {
             transform: scale(1.05); box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
     </style>
@@ -78,110 +86,10 @@
             <input type="text" id="task-input" placeholder="Escribe una tarea...">
             <button id="add-button">+</button>
         </div>
+        <button class="clear-button" id="clear-button">Limpiar Todo</button>
         <ul class="task-list" id="task-list"></ul>
     </div>
     <button id="mode-toggle">☀️</button>
 
     <script>
         const body = document.body;
-        const modeToggle = document.getElementById('mode-toggle');
-        const taskInput = document.getElementById('task-input');
-        const addButton = document.getElementById('add-button');
-        const taskList = document.getElementById('task-list');
-
-        // Cargar modo oscuro desde localStorage
-        if (localStorage.getItem('darkMode') === 'true') {
-            body.classList.add('dark-mode');
-            modeToggle.innerHTML = '🌙';
-        }
-
-        // Toggle modo oscuro
-        modeToggle.addEventListener('click', () => {
-            modeToggle.classList.add('animate-toggle');
-            setTimeout(() => modeToggle.classList.remove('animate-toggle'), 300);
-            body.classList.toggle('dark-mode');
-            if (body.classList.contains('dark-mode')) {
-                modeToggle.innerHTML = '🌙';
-                localStorage.setItem('darkMode', 'true');
-            } else {
-                modeToggle.innerHTML = '☀️';
-                localStorage.setItem('darkMode', 'false');
-            }
-        });
-
-        // Función para añadir tarea
-        function addTask() {
-            const taskText = taskInput.value.trim();
-            if (!taskText) return;
-
-            const li = document.createElement('li');
-            li.classList.add('task-item');
-
-            const span = document.createElement('span');
-            span.textContent = taskText;
-
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = '×';
-            deleteButton.addEventListener('click', () => {
-                li.style.animation = 'slideOut 0.3s ease forwards';
-                setTimeout(() => {
-                    li.remove();
-                    saveTasks();
-                }, 300);
-            });
-
-            li.appendChild(span);
-            li.appendChild(deleteButton);
-            taskList.appendChild(li);
-            taskInput.value = '';
-            taskInput.focus();
-            saveTasks();
-        }
-
-        addButton.addEventListener('click', addTask);
-
-        // Añadir tarea con Enter
-        taskInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') addTask();
-        });
-
-        // Guardar tareas
-        function saveTasks() {
-            const tasks = [];
-            document.querySelectorAll('.task-item span').forEach(span => tasks.push(span.textContent));
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-        }
-
-        // Cargar tareas
-        function loadTasks() {
-            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-            tasks.forEach(task => addTaskToList(task));
-        }
-
-        function addTaskToList(taskText) {
-            const li = document.createElement('li');
-            li.classList.add('task-item');
-
-            const span = document.createElement('span');
-            span.textContent = taskText;
-
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = '×';
-            deleteButton.addEventListener('click', () => {
-                li.style.animation = 'slideOut 0.3s ease forwards';
-                setTimeout(() => {
-                    li.remove();
-                    saveTasks();
-                }, 300);
-            });
-
-            li.appendChild(span);
-            li.appendChild(deleteButton);
-            taskList.appendChild(li);
-        }
-
-        loadTasks();
-    </script>
-</body>
-</html>
-```
