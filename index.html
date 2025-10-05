@@ -37,7 +37,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .clear-button {
-            background-color: #ff3b30; color: white; border: none; border-radius: 12px;
+            background-color: #c92b22; color: white; border: none; border-radius: 12px;
             padding: 10px 20px; cursor: pointer; font-size: 14px; margin-bottom: 20px;
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
@@ -49,7 +49,7 @@
         .task-item {
             background-color: #fff; padding: 15px; margin-bottom: 12px; border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center;
-            opacity: 0; transform: translateY(20px); animation: slideIn 0.5s ease forwards;
+            opacity: 0; transform: translateY(20px); animation: slideIn 0.8s ease forwards;
         }
         body.dark-mode .task-item { background-color: #333; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .task-item span { flex: 1; font-size: 16px; }
@@ -104,7 +104,7 @@
         // Toggle modo oscuro
         modeToggle.addEventListener('click', () => {
             modeToggle.classList.add('animate-toggle');
-            setTimeout(() => modeToggle.classList.remove('animate-toggle'), 300);
+            setTimeout(() => modeToggle.classList.remove('animate-toggle'), 500);
             body.classList.toggle('dark-mode');
             if (body.classList.contains('dark-mode')) {
                 modeToggle.innerHTML = '🌙';
@@ -135,7 +135,7 @@
             const deleteButton = document.createElement('button');
             deleteButton.textContent = '×';
             deleteButton.addEventListener('click', () => {
-                li.style.animation = 'slideOut 0.3s ease forwards';
+                li.style.animation = 'slideOut 0.7s ease forwards';
                 setTimeout(() => {
                     li.remove();
                     saveTasks();
@@ -189,7 +189,7 @@
             const deleteButton = document.createElement('button');
             deleteButton.textContent = '×';
             deleteButton.addEventListener('click', () => {
-                li.style.animation = 'slideOut 0.3s ease forwards';
+                li.style.animation = 'slideOut 0.7s ease forwards';
                 setTimeout(() => {
                     li.remove();
                     saveTasks();
