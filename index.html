@@ -6,12 +6,7 @@
     <title>Lista de Tareas</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #f5f5f5;
@@ -22,181 +17,52 @@
             min-height: 100vh;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-
-        body.dark-mode {
-            background-color: #1a1a1a;
-            color: #ddd;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-        }
-
+        body.dark-mode { background-color: #1a1a1a; color: #ddd; }
+        .container { width: 100%; max-width: 400px; padding: 20px; }
         h1 {
-            font-size: 32px;
-            font-weight: 700;
-            text-align: center;
-            text-transform: uppercase;
-            margin-bottom: 30px;
-            background: linear-gradient(45deg, #333, #888, #333);
-            background-size: 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 32px; font-weight: 700; text-align: center; text-transform: uppercase; margin-bottom: 30px;
+            background: linear-gradient(45deg, #333, #888, #333); background-size: 200%;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             animation: shine 3s linear infinite;
         }
-
-        body.dark-mode h1 {
-            background: linear-gradient(45deg, #fff, #ccc, #fff);
-            background-size: 200%;
-        }
-
-        @keyframes shine {
-            0% { background-position: 0%; }
-            100% { background-position: 200%; }
-        }
-
-        .add-task {
-            display: flex;
-            margin-bottom: 20px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: slideIn 0.5s ease forwards;
-        }
-
+        body.dark-mode h1 { background: linear-gradient(45deg, #fff, #ccc, #fff); background-size: 200%; }
+        @keyframes shine { 0% { background-position: 0%; } 100% { background-position: 200%; } }
+        .add-task { display: flex; margin-bottom: 20px; opacity: 0; transform: translateY(20px); animation: slideIn 0.5s ease forwards; }
         #task-input {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            margin-right: 10px;
-            background-color: #fff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            flex: 1; padding: 12px; border: none; border-radius: 12px; font-size: 16px; margin-right: 10px;
+            background-color: #fff; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-
-        body.dark-mode #task-input {
-            background-color: #333;
-            color: #ddd;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        #task-input:focus {
-            outline: none;
-        }
-
+        body.dark-mode #task-input { background-color: #333; color: #ddd; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        #task-input:focus { outline: none; }
         #add-button {
-            width: 44px;
-            height: 44px;
-            background-color: #007aff;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 44px; height: 44px; background-color: #007aff; color: white; border: none; border-radius: 12px;
+            font-size: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-
-        .task-list {
-            list-style: none;
-        }
-
+        .task-list { list-style: none; }
         .task-item {
-            background-color: #fff;
-            padding: 15px;
-            margin-bottom: 12px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: slideIn 0.5s ease forwards;
+            background-color: #fff; padding: 15px; margin-bottom: 12px; border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center;
+            opacity: 0; transform: translateY(20px); animation: slideIn 0.5s ease forwards;
         }
-
-        body.dark-mode .task-item {
-            background-color: #333;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .task-item span {
-            flex: 1;
-            font-size: 16px;
-        }
-
+        body.dark-mode .task-item { background-color: #333; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .task-item span { flex: 1; font-size: 16px; }
         .task-item button {
-            background-color: #ff3b30;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 8px 12px;
-            cursor: pointer;
-            font-size: 24px;
-            line-height: 1;
+            background-color: #ff3b30; color: white; border: none; border-radius: 8px;
+            padding: 8px 12px; cursor: pointer; font-size: 24px; line-height: 1;
         }
-
         #mode-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
+            position: fixed; top: 20px; right: 20px; background: none; border: none; font-size: 24px; cursor: pointer;
         }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideOut {
-            from {
-                opacity: 1;
-                transform: translateX(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-        }
-
-        @keyframes subtle-rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(180deg); }
-        }
-
-        .animate-toggle {
-            animation: subtle-rotate 0.3s ease;
-        }
-
-        /* ---- EFECTO SUTIL DE AGRANDAR EN TODOS LOS SELECCIONABLES ---- */
-        #add-button,
-        .task-item,
-        .task-item button,
-        #task-input,
-        #mode-toggle {
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(20px); } }
+        @keyframes subtle-rotate { from { transform: rotate(0deg); } to { transform: rotate(180deg); } }
+        .animate-toggle { animation: subtle-rotate 0.3s ease; }
+        #add-button, .task-item, .task-item button, #task-input, #mode-toggle {
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
-
-        #add-button:hover,
-        .task-item:hover,
-        .task-item button:hover,
-        #task-input:hover,
-        #mode-toggle:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        #add-button:hover, .task-item:hover, .task-item button:hover, #task-input:hover, #mode-toggle:hover {
+            transform: scale(1.05); box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
     </style>
 </head>
@@ -227,10 +93,7 @@
         // Toggle modo oscuro
         modeToggle.addEventListener('click', () => {
             modeToggle.classList.add('animate-toggle');
-            setTimeout(() => {
-                modeToggle.classList.remove('animate-toggle');
-            }, 300);
-
+            setTimeout(() => modeToggle.classList.remove('animate-toggle'), 300);
             body.classList.toggle('dark-mode');
             if (body.classList.contains('dark-mode')) {
                 modeToggle.innerHTML = '🌙';
@@ -241,28 +104,13 @@
             }
         });
 
-        // Cargar tareas desde localStorage
-        function loadTasks() {
-            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-            tasks.forEach((task, index) => {
-                addTaskToList(task, index);
-            });
-        }
+        // Función para añadir tarea
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            if (!taskText) return;
 
-        // Guardar tareas en localStorage
-        function saveTasks() {
-            const tasks = [];
-            document.querySelectorAll('.task-item span').forEach(span => {
-                tasks.push(span.textContent);
-            });
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-        }
-
-        // Añadir tarea a la lista
-        function addTaskToList(taskText, index) {
             const li = document.createElement('li');
             li.classList.add('task-item');
-            li.style.animationDelay = `${index * 0.1}s`;
 
             const span = document.createElement('span');
             span.textContent = taskText;
@@ -273,3 +121,61 @@
                 li.style.animation = 'slideOut 0.3s ease forwards';
                 setTimeout(() => {
                     li.remove();
+                    saveTasks();
+                }, 300);
+            });
+
+            li.appendChild(span);
+            li.appendChild(deleteButton);
+            taskList.appendChild(li);
+            taskInput.value = '';
+            taskInput.focus();
+            saveTasks();
+        }
+
+        addButton.addEventListener('click', addTask);
+
+        // Añadir tarea con Enter
+        taskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addTask();
+        });
+
+        // Guardar tareas
+        function saveTasks() {
+            const tasks = [];
+            document.querySelectorAll('.task-item span').forEach(span => tasks.push(span.textContent));
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        // Cargar tareas
+        function loadTasks() {
+            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks.forEach(task => addTaskToList(task));
+        }
+
+        function addTaskToList(taskText) {
+            const li = document.createElement('li');
+            li.classList.add('task-item');
+
+            const span = document.createElement('span');
+            span.textContent = taskText;
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = '×';
+            deleteButton.addEventListener('click', () => {
+                li.style.animation = 'slideOut 0.3s ease forwards';
+                setTimeout(() => {
+                    li.remove();
+                    saveTasks();
+                }, 300);
+            });
+
+            li.appendChild(span);
+            li.appendChild(deleteButton);
+            taskList.appendChild(li);
+        }
+
+        loadTasks();
+    </script>
+</body>
+</html>
